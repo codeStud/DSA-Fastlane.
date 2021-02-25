@@ -1,0 +1,39 @@
+// Given a non-empty array of decimal digits representing a non-negative integer, increment one to the integer.
+// The digits are stored such that the most significant digit is at the head of the list, and each element in the array contains a single digit.
+// You may assume the integer does not contain any leading zero, except the number 0 itself.
+
+// Input: digits = [4,3,2,1]
+// Output: [4,3,2,2]
+// Explanation: The array represents the integer 4321.
+
+// Input: digits = [0]
+// Output: [1]
+
+`````````````````````````````````````````````````````````````````````````````````SOLUTION``````````````````````````````````````````````````````````````````````
+
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        
+        // initially keep carry = 1 bcz you've to add 1 to the LSB.
+        int carry = 1, temp;
+        
+        // start from the LSB and store the added value in temp.
+        // Don't directly update digits[i] without temp otherwise carry = (carry+digits[i])/10 won't be
+        // the correct carry value.
+        
+        for(int i = digits.size()-1; i >= 0; i--){
+            temp = (carry + digits[i]) % 10;
+            carry = (carry + digits[i]) / 10;
+            digits[i] = temp;
+        }
+        
+        // If carry from the MSB, insert "1" at the 0th position.
+        if(carry != 0){
+            digits.insert(digits.begin(), 1);
+        }
+        
+        return digits;
+        
+    }
+};
