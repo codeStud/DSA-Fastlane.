@@ -1,0 +1,59 @@
+// Given two arrays, write a function to compute their intersection.
+
+// Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+// Output: [4,9]
+
+````````````````````````````````````````````````````````````````````````SOLUTION``````````````````````````````````````````````````````````````````
+
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        
+       sort(nums1.begin(), nums1.end());
+        sort(nums2.begin(), nums2.end());
+        vector <int> res;
+        
+        int i = 0;
+        int j = 0;
+        
+        while(i < nums1.size() && j < nums2.size()){
+            if(nums1[i] == nums2[j]){
+                res.push_back(nums1[i]);
+                i += 1;
+                j += 1;
+            }
+            else if(nums1[i] < nums2[j])
+                i += 1;
+            else
+                j += 1;
+                            
+        }
+            
+        return res;
+        
+    }
+};
+
+// METHOD 2: Insert one of the vectors in the map along with the count of the elements.
+// Loop through the second vector and for every match, push the element to the result and decrement the count 
+// of the element in the map until the count of an element in the map reaches to 0.
+
+// METHOD 3: Idea is to push one of the vectors in multiset and then keep removing the matching element
+// // from the multiset one at a time and pushing it to the result vector.
+// Time complexity of operations on multiset is O(log n) on avg.
+        
+//         vector <int> result;
+//         // Multiset allows duplicate values
+//         unordered_multiset <int> hash;
+//         for(int i = 0; i < nums2.size(); i++){
+//             hash.insert(nums2[i]);
+//         }
+        
+//         for(int i = 0; i < nums1.size(); i++){
+//             if(hash.find(nums1[i]) != hash.end()){
+//                 result.push_back(nums1[i]);
+//                 hash.erase(hash.find(nums1[i]));    // DON'T write  hash.erase(nums1[i]) otherwise all the 
+//                                             // matching entries will be deleted. hash.find(nums1[i]) returns                                              // the pointer to the 1st matched element & only that'll be deleted.
+//             }
+//         }
+//         return result;
