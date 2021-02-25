@@ -3,6 +3,17 @@
 
 // Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
 
+// Input: prices = [7,1,5,3,6,4]
+// Output: 7
+// Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.
+// Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.
+
+// Input: prices = [7,6,4,3,1]
+// Output: 0
+// Explanation: In this case, no transaction is done, i.e., max profit = 0.
+
+`````````````````````````````````````````````````````````````````````````SOLUTION``````````````````````````````````````````````````````````````````
+
 // At every step, you are just taking the POSITIVE profits and adding it to get max Profit. If Loss happening, we aren't gonna include that in our calulation and the profit remains 0 in that case.
 
 // At every step, you have to make a decision whether you have to take the profit or just ignore the element.
