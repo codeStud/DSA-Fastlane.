@@ -1,0 +1,29 @@
+// You are given an array prices for which the ith element is the price of a given stock on day i.
+// Find the maximum profit you can achieve. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).
+
+// Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
+
+// At every step, you are just taking the POSITIVE profits and adding it to get max Profit. If Loss happening, we aren't gonna include that in our calulation and the profit remains 0 in that case.
+
+// At every step, you have to make a decision whether you have to take the profit or just ignore the element.
+// Case 1: [7, 1, ....] Here, you can DROP 7 because there is no profit (1-7 = -6 loss) also, if there is another no. higher than 7, say [7,1,....,11] then you can get more profit by buying at 1 and selling at 11 than buying it at 7 and selling at 11. NOTE THAT YOU CAN'T BUY AT 7 AND BUY AT 1 WITHOUT SELLING FIRST.
+
+// Case 2: [7, 1, 5, .....] (7 has been dropped) Here, you can INCLUDE THE PROFIT (5-1=4). You might think that you can get more profit if [7,1,5,10] i sell at 10. But note that profit[1 & 10] = profit[1 & 5] + profit[5 & 10]. So, it'll get included in the future calculations. Also, if case [7,1,5,4] arises, it'll be handled as you're getting more profit by purchasing at 1 and selling at 5. In the next iteration, there's a loss (4-5 = -1) and thus, we won't add the loss of -1 to the maxProfit.
+
+// In case of [1,2,3,4,5] profit[1 & 5] = profit[1 & 2] + profit[2 & 3] + profit[3 & 4] + profit[4 & 5]
+
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        
+        int maxProfit = 0, profit;
+        for(int i = 1; i < prices.size(); i++){
+            profit = prices[i] - prices[i-1];
+            if(profit > 0)
+                maxProfit += profit;
+        }
+        return maxProfit;
+        
+    }
+};
