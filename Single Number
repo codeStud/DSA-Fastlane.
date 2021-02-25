@@ -1,0 +1,24 @@
+// Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+// Do it in linear time and without extra memory.
+// Input: nums = [4,1,2,1,2]
+// Output: 4
+
+````````````````````````````````````````````````````````````````SOLUTION`````````````````````````````````````````````````````````
+// A Ex-OR A = 0
+// A Ex-OR 0 = A
+// So, exor all the elements. Since n-1 elements appear in pair, their output will be = 0 and then,
+// 0 Ex-OR "non-repeated element" = "Non repeated element"
+
+#include<iostream>
+#include<vector>
+using namespace std;
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int i;
+        for(i = 1; i < nums.size(); i++){
+            nums[i] ^= nums[i-1];            
+        }
+        return nums[i-1];
+    }
+};
