@@ -1,2 +1,2 @@
 # DSA-Fastlane.
-Solutions to the most popular and most frequent data structures &amp; algorithms problems.
+Solutions to the most popular and most frequently asked data structures &amp; algorithms problems.
