@@ -1,0 +1,38 @@
+// Given a string s, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+
+// Input: s = "A man, a plan, a canal: Panama"
+// Output: true
+// Explanation: "amanaplanacanalpanama" is a palindrome.
+
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        
+        for(int i = 0, j = s.size()-1; i < j; i++, j--){
+            // if both are not alphanumeric, do nothing
+            if(!isalnum(s[i]) && !isalnum(s[j])){
+                continue;
+            }
+                
+            // if s[i] is not aphanumeric, just increment the i & don't decrement the j. 
+            // Thus, do j++ so that when j-- is done in for loop, value of j remains same.
+            else if(!isalnum(s[i])){
+                j++;
+            }
+            // if s[j] is not alphanumeric, just decrement j and keep i unchanged.
+            // Thus, decrement i here so that i++ in for loop will keep the i unchanged.
+            else if(!isalnum(s[j])){
+                i--;
+            }
+            // both are alphanumeric, & we have to ignore the cases. Thus convert all to uppercase & compare.
+            else{
+                // if the characters at the opposite ends aren't equal, it isn't a palindrome.
+                if(toupper(s[i]) != toupper(s[j])){
+                    return false;
+                }    
+            }    
+        }
+        
+        return true;
+    }
+};
