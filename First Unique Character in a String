@@ -1,0 +1,32 @@
+// Given a string, find the first non-repeating character in it and return its index. If it doesn't exist, return -1.
+
+// s = "leetcode"
+// return 0.
+
+// s = "loveleetcode"
+// return 2.
+
+// Note: You may assume the string contains only lowercase English letters.
+
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        // Initialise an array of size 26, one index for each of the 26 lowercase alphabets
+        int arr[26] = {0};
+        int res = -1;
+        
+        // put the count of each occuring alphabet in string s
+        for(auto i : s){
+            arr[i-97] += 1;
+        }
+        // find the first unique character and return it's index 
+        for(int i = 0; i < s.size(); i++){
+            if(arr[s[i]-97] == 1){
+                res = i;
+                break;
+            }
+        }
+        
+        return res;
+    }
+};
