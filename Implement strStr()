@@ -1,0 +1,70 @@
+// Implement strStr().
+
+// Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+// Clarification:
+// What should we return when needle is an empty string? This is a great question to ask during an interview.
+// For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C's strstr() and Java's indexOf().
+
+// Input: haystack = "hello", needle = "ll"
+// Output: 2
+
+// KMP Substring search algorithm
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        
+        if(needle.size() == 0)
+            return 0;
+        
+        vector <int> lps = createLpsArray(needle, needle.size());
+        int i = 0; // for haystack
+        int j = 0; // for needle
+        while(i < haystack.size()){
+            
+            if(haystack[i] == needle[j]){
+                i++;
+                j++;
+            }
+            if(j == needle.size()){
+                return i - j;
+            }
+            if (i < haystack.size() && needle[j] != haystack[i]) { 
+                if (j != 0) 
+                    j = lps[j - 1]; 
+                else
+                    i = i + 1; 
+            }
+            
+        }
+        
+        return -1;
+    }
+    
+    vector <int> createLpsArray(string arr, int n)
+    {
+        int i = 0, j = 1;
+        vector <int> lps(n, 0);
+        while(j < n){
+            
+            if(arr[i] == arr[j]){
+                lps[j] = i+1;   // value at lps[j] = i+1, and then increment i and j
+                i++;
+                j++;
+            }
+            // No match and i != 0 then i = lps[i-1] & don't increment j
+            else if(i != 0){
+                i = lps[i-1];
+            }
+            // No match and i == 0 then lps[j] = 0 and increment j
+            else{
+                lps[j] = 0;
+                j++;
+            }
+            
+        }
+        return lps;
+    }
+    
+};
