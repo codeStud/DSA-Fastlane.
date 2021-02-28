@@ -1,0 +1,31 @@
+// Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+// You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+// You can return the answer in any order.
+
+// Input: nums = [2,7,11,15], target = 9
+// Output: [0,1]
+// Output: Because nums[0] + nums[1] == 9, we return [0, 1].
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+
+        vector <int> res;
+        unordered_map <int, int> hashMap;
+        
+        for(int i = 0; i < nums.size(); i++){
+            // if the target-currentElement exists in hashMap, you've got the solution.
+        // Note that this will also handle nums= [3, 3] & target = 6 case cuz you're checking before inserting.
+            if(hashMap.find(target - nums[i]) != hashMap.end()){
+                res.push_back(i); // push the index of the current element
+                res.push_back(hashMap[target-nums[i]]);   // push the index of the target-nums[i] element.
+                break;
+            }
+            
+            hashMap[nums[i]] = i;
+        }
+        return res;   
+    }
+};
