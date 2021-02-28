@@ -1,0 +1,36 @@
+// Given two strings s and t , write a function to determine if t is an anagram of s.
+
+// Input: s = "anagram", t = "nagaram"
+// Output: true
+
+// Input: s = "rat", t = "car"
+// Output: false
+
+// You may assume the string contains only lowercase alphabets.
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        // declare an array of size 26, one index corresponding to each of the 26 lowercase alphabets.
+        int arr[26] = {0};
+        
+        // traverse string s and store the count of each alphabet in the arr
+        for(auto i : s){
+            arr[i-97] += 1;
+        }
+        
+        // Traverse string t and decrement the count of each alphabet in the arr
+        for(auto i : t){
+            arr[i-97] -= 1;
+        }
+        
+        // Traverse arr and see if all the values are 0, if yes then return true; false otherwise
+        for(auto i : arr){
+            if(i != 0){         // s = "a"  t = "ab", in this case, the value of arr[1] is = -1
+                return false;
+            }
+            // cout<<i<<" ";
+        }
+        return true;
+    }
+};
