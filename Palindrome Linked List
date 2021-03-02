@@ -1,0 +1,35 @@
+// Given a singly linked list, determine if it is a palindrome.
+// do it in O(n) time and O(1) space.
+
+// Input: 1->2->2->1
+// Output: true
+
+class Solution {
+public:
+    // keep a global variable to traverse from left to right
+    ListNode *temp;
+    // keep the result = true by default
+    bool result = true;
+    
+    bool isPalindrome(ListNode* head) {
+        temp = head;
+        return checkPalindrome(head);
+    }
+    
+    bool checkPalindrome(ListNode *head){
+        if(head == NULL){
+            result = true;
+            return result;
+        }    
+            
+        // go to the end node
+        checkPalindrome(head->next);
+        // Compare front and back. Return false even if one value mis-matches
+        if(head->val != temp->val)
+            result = false;
+        // move one node to the right
+        temp = temp->next;
+        return result;
+    }
+    
+};
