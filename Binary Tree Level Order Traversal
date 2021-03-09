@@ -1,0 +1,45 @@
+// Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+// Input: root = [3,9,20,null,null,15,7]
+// Output: [[3],[9,20],[15,7]]
+
+// Input: root = [1]
+// Output: [[1]]
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+            
+        vector<vector<int>> res;
+        
+        if(root == NULL)
+            return res;
+        
+        queue <TreeNode*> q;
+        q.push(root);
+        
+        while(!q.empty()){
+            // initialise 1-D vector here, so that it is empty at the start of each loop
+            vector <int> curLevel;
+            // n will give the number of nodes in the current level
+            int n = q.size();
+            // Run the loop till n and pop all the "n" nodes at the current level, push them to curLevel
+            // and enqueue the nodes at the next level
+            for(int i = 0; i < n; i++){
+                TreeNode *temp = q.front();
+                q.pop();
+                // push the value to 1-D vector
+                curLevel.push_back(temp->val);
+                // enqueue nodes at the next level
+                if(temp->left)
+                    q.push(temp->left);
+                if(temp->right)
+                    q.push(temp->right);
+            }
+            // once out of the for loop, you would have all the nodes at same level in curLevel 1-D vector
+            res.push_back(curLevel);
+        }
+        
+        return res;
+    }
+};
