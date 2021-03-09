@@ -1,0 +1,45 @@
+// Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+// A valid BST is defined as follows:
+
+// The left subtree of a node contains only nodes with keys less than the node's key.
+// The right subtree of a node contains only nodes with keys greater than the node's key.
+// Both the left and right subtrees must also be binary search trees.
+
+// Input: root = [2,1,3]
+// Output: true
+
+// Input: root = [5,1,4,null,null,3,6]
+// Output: false
+// Explanation: The root node's value is 5 but its right child's value is 4.
+
+// Note: Just checking if -
+// (root->val > root->left-val && root->val > root->right->val && isBST(root->left) && // isBST(root->right))
+// won't work in cases like     5
+//                             / \ 
+//                            1   6
+//                               / \
+//                              4   8  
+
+class Solution {
+public:
+    
+    bool isBSTUtil(TreeNode *root, long minVal, long maxVal){
+        // Considering empty tree as binary tree
+        if(root == NULL)
+           return true;
+        // if the value of the root is well within the range, check the same for left and right subtree
+        if(root->val > minVal && root->val < maxVal){
+            return (isBSTUtil(root->left, minVal, root->val) && isBSTUtil(root->right, root->val, maxVal));
+        }
+        // if not, return false
+        return false;
+    }
+    
+    bool isValidBST(TreeNode* root) {
+        // setting the range of values on the root_node. It can take any value in the range [ INT_MIN, INT_MAX ]         // But due to the corner cases, you won't be able to check the validity if root->val = INT_MIN or INT_MAX
+        // Thus, pass LONG_MIN, LONG_MAX as the ranges to cover these cases.
+        return isBSTUtil(root, LONG_MIN, LONG_MAX);
+        
+    }
+};
