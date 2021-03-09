@@ -1,0 +1,39 @@
+// Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+// Input: root = [1,2,2,3,4,4,3]
+// Output: true
+
+// Input: root = [1,2,2,null,3,null,3]
+// Output: false
+
+class Solution {
+public:    
+    
+    bool isSymmetricUtil(TreeNode *node1, TreeNode *node2)
+    {
+        // if both nodes NULL => return true
+        if(node1 == NULL && node2 == NULL)
+            return true;
+        // if only one of the nodes exist, then return false as Null can't be an image of any valid node value
+        if(node1 == NULL || node2 == NULL)
+            return false;
+        // if value in both nodes are equal match value of nod1->left with node2->right and then node1->right
+        // with node2->left (bcz mirror image work like that).
+        // Carry out the above process recursively for each node.
+        if(node1->val == node2->val){
+            return (isSymmetricUtil(node1->left, node2->right) &&
+                    isSymmetricUtil(node1->right, node2->left));
+        }
+        // return false if the values in the nodes don't match
+        return false;
+        
+    }
+    
+    bool isSymmetric(TreeNode* root) {
+        // Consider empty as true
+        if(!root)
+            return true;
+        return isSymmetricUtil(root->left, root->right);
+        
+    }
+};
