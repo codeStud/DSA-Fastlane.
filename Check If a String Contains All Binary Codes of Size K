@@ -1,0 +1,44 @@
+// Given a binary string s and an integer k.
+
+// Return True if every binary code of length k is a substring of s. Otherwise, return False.
+
+// Input: s = "00110110", k = 2
+// Output: true
+// Explanation: The binary codes of length 2 are "00", "01", "10" and "11". They can be all found as substrings at indicies 0, 1, 3 and 2 respectively.
+
+// Input: s = "0110", k = 2
+// Output: false
+// Explanation: The binary code "00" is of length 2 and doesn't exist in the array.
+
+class Solution {
+public:
+    bool hasAllCodes(string s, int k) {
+        
+        unordered_set <string> hash;
+        string temp;
+        temp.resize(k);
+        int j, strSize;
+        
+        // set the pointer to the kth char of string 's' and make substrings of length 'k' by looking backwards
+        for(int i = k-1; i < s.size(); i++){
+            // go k char back and form a temp string of length k
+            j = i;
+            strSize = k-1;
+            
+            while(strSize >= 0){
+                // forming a binary string of length k, going backwards in the string s
+                temp[strSize]  = s[j];
+                j -= 1;
+                strSize -= 1;
+            }
+            
+            // insert the substring formed if it's not already in the hash
+            if(hash.find(temp) == hash.end())
+                hash.insert(temp);   
+        }
+        
+        // if string s has all the substrings, size of hash should be 2^k 
+        // bcz, 2^k distinct binary substrings are possible of length k
+        return hash.size() == (pow(2, k));
+    }
+};
