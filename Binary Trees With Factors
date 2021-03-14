@@ -1,0 +1,66 @@
+// Given an array of unique integers, arr, where each integer arr[i] is strictly greater than 1.
+
+// We make a binary tree using these integers, and each number may be used for any number of times. 
+// Each non-leaf node's value should be equal to the product of the values of its children.
+
+// Return the number of binary trees we can make. The answer may be too large so return the answer modulo 10^9 + 7.
+
+// Constraints:
+// 1 <= arr.length <= 1000
+// 2 <= arr[i] <= 109
+
+// Input: arr = [2,4]
+// Output: 3
+// Explanation: We can make these trees: [2], [4], [4, 2, 2]
+
+// Input: arr = [2,4,5,10]
+// Output: 7
+// Explanation: We can make these trees: [2], [4], [5], [10], [4, 2, 2], [10, 2, 5], [10, 5, 2].
+
+class Solution {
+public:
+    int numFactoredBinaryTrees(vector<int>& arr) {
+        // sort the array so that we have number of ways to form Binary Tree for smaller numbers that
+        // can be used to find number of ways to form BT of larger numbers
+        sort(arr.begin(), arr.end());
+        
+        int res = 0;
+        // use hashmap for memoization.
+        // key ->int & value->long (bcz number of ways can be large)
+        unordered_map <int, long> hashMap;
+        
+        for(int num : arr){
+                        
+            long ways = 1; // initialized with 1 bcz BT with single element is always possible
+            
+            // find out the factors of num which exist in array
+            for(int fA = 2; fA <= sqrt(num); fA++){
+                
+                if(num % fA != 0)
+                    continue;
+                // check if factorA exists in arr
+                if(hashMap.find(fA) == hashMap.end())
+                    continue;
+                
+                int fB = num / fA;
+                // check if factorB exists in hashmap or not
+                if(hashMap.find(fB) != hashMap.end()){
+                    
+            // number of ways to form Binary Tree with num as root & num having 2 factors -factorA, factorB
+                    // is equal to
+            // number of ways to form BT with factorA * number of ways to form BT with factorB * (2 if fA != fB)
+                    
+                    ways += hashMap[fA] * hashMap[fB] * (fA == fB ? 1 : 2);
+                    
+                }                
+            }
+            // store the result for memoization
+            hashMap[num] = ways;
+            
+            // keep the sum of ways. Also, since return type is int, keep it within the range always.
+            res = (res + ways) % 1000000007;    
+        }
+        
+        return res;
+    }
+};
